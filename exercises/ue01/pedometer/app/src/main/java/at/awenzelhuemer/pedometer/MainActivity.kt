@@ -98,23 +98,9 @@ class MainActivity : ComponentActivity() {
                 obs.add(weight, value)
             }
 
-            val regression = PolynomialRegression(
-                doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0),
-                transformedComplex.subList(2, 7).toDoubleArray(),
-                4
-            )
-
-
             val fitter = PolynomialCurveFitter.create(4)
-            val coefficients = fitter.fit(obs.toList())
-            // val coefficients = doubleArrayOf(
-            //     regression.predict(1.0),
-            //     regression.predict(2.0),
-            //     regression.predict(3.0),
-            //     regression.predict(4.0),
-            //     regression.predict(5.0)
-            // )
-            val maximum = LaguerreSolver().solveComplex(coefficients, 1.0).abs()
+            val coefficients = fitter.fit(obs.toList()).reversedArray()
+            val maximum = LaguerreSolver().solveComplex(coefficients, 1.0, 5).abs()
 
             if (wc > w0 && wc > 10) {
                 val fw = res * (maximum + 1)
